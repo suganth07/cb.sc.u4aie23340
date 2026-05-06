@@ -4,13 +4,14 @@ import {
   Container,
   Typography,
   CircularProgress,
+  Alert,
 } from "@mui/material";
 
 import API from "../api/notificationApi";
 
 import NotificationCard from "../components/NotificationCard";
 
-import { Notification } from "../types/notification";
+import type { Notification } from "../types/notification";
 
 export default function NotificationsPage() {
   const [notifications, setNotifications] = useState<
@@ -19,24 +20,43 @@ export default function NotificationsPage() {
 
   const [loading, setLoading] = useState(true);
 
+  const [error, setError] = useState("");
+
   async function fetchNotifications() {
     try {
       const response = await API.get("/notifications");
 
-      setNotifications(response.data.data);
-    } catch (error) {
-      console.error(error);
+      console.log(response.data);
+
+      setNotifications(response.data.notifications || []);
+    } catch (err) {
+      console.error(err);
+
+      setError("Failed to fetch notifications");
     } finally {
       setLoading(false);
     }
   }
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchNotifications();
   }, []);
 
   if (loading) {
-    return <CircularProgress />;
+    return (
+      <Container sx={{ mt: 4 }}>
+        <CircularProgress />
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container sx={{ mt: 4 }}>
+        <Alert severity="error">{error}</Alert>
+      </Container>
+    );
   }
 
   return (
@@ -45,12 +65,16 @@ export default function NotificationsPage() {
         Notifications
       </Typography>
 
-      {notifications.map((notification) => (
-        <NotificationCard
-          key={notification.ID}
-          notification={notification}
-        />
-      ))}
+      {notifications.length === 0 ? (
+        <Typography>No notifications found</Typography>
+      ) : (
+        notifications.map((notification) => (
+          <NotificationCard
+            key={notification.ID}
+            notification={notification}
+          />
+        ))
+      )}
     </Container>
   );
 }

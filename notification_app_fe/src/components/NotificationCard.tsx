@@ -5,7 +5,7 @@ import {
   Chip,
 } from "@mui/material";
 
-import { Notification } from "../types/notification";
+import type { Notification } from "../types/notification";
 
 interface Props {
   notification: Notification;

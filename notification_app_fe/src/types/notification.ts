@@ -1,6 +1,6 @@
 export interface Notification {
   ID: string;
-  Type: "Placement" | "Result" | "Event";
+  Type: string;
   Message: string;
   Timestamp: string;
 }
