@@ -3,43 +3,53 @@ import {
   CardContent,
   Typography,
   Chip,
+  Stack,
 } from "@mui/material";
 
 import type { Notification } from "../types/notification";
 
 interface Props {
   notification: Notification;
-  viewed?: boolean;
 }
 
-export default function NotificationCard({
-  notification,
-  viewed = false,
-}: Props) {
+const NotificationCard = ({ notification }: Props) => {
   return (
     <Card
       sx={{
         marginBottom: 2,
-        backgroundColor: viewed ? "#f5f5f5" : "#ffffff",
+        backgroundColor: "#1e1e2f",
+        color: "white",
       }}
     >
       <CardContent>
-        <Typography variant="h6">
-          {notification.Message}
-        </Typography>
-
-        <Chip
-          label={notification.Type}
-          sx={{ marginTop: 1 }}
-        />
-
-        <Typography
-          variant="body2"
-          sx={{ marginTop: 1 }}
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          mb={1}
         >
+          <Typography variant="h6">
+            {notification.Message}
+          </Typography>
+
+          <Chip
+            label={notification.Type}
+            color={
+              notification.Type === "Placement"
+                ? "success"
+                : notification.Type === "Event"
+                ? "primary"
+                : "secondary"
+            }
+          />
+        </Stack>
+
+        <Typography variant="body2">
           {notification.Timestamp}
         </Typography>
       </CardContent>
     </Card>
   );
-}
+};
+
+export default NotificationCard;

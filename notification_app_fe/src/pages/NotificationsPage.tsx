@@ -28,7 +28,7 @@ export default function NotificationsPage() {
 
       console.log(response.data);
 
-      setNotifications(response.data.notifications || []);
+      setNotifications(response.data.data || []);
     } catch (err) {
       console.error(err);
 
