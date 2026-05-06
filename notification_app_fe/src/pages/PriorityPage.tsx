@@ -63,7 +63,26 @@ export default function PriorityPage() {
   }
 
   return (
-    <Container sx={{ marginTop: 4 }}>
+    <Container sx={{ marginTop: 4 }}
+    sx={{
+    input: {
+      color: "white",
+    },
+    label: {
+      color: "white",
+    },
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "white",
+      },
+      "&:hover fieldset": {
+        borderColor: "white",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "white",
+      },
+    },
+  }}>
       <Typography variant="h4" gutterBottom>
         Priority Notifications
       </Typography>
@@ -110,6 +129,25 @@ export default function PriorityPage() {
           onChange={(e) =>
             setLimit(Number(e.target.value))
           }
+          sx={{
+              input: {
+                color: "white",
+              },
+              label: {
+                color: "white",
+              },
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: "white",
+                },
+                "&:hover fieldset": {
+                  borderColor: "white",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "white",
+                },
+              },
+            }}
         />
       </Stack>
 
